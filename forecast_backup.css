@@ -1,4 +1,4 @@
-@media (max-width: 480px){
+@media (max-width: 768px){
    .seven-cols .col-md-1,
    .seven-cols .col-sm-1,
    .seven-cols .col-lg-1  {
@@ -56,64 +56,6 @@
    }
 }
 
-@media (min-width: 768px){
-   .seven-cols .col-md-1,
-   .seven-cols .col-sm-1,
-   .seven-cols .col-lg-1  {
-      width: 100%;
-      *width: 100%;
-   }
-
-   .tab3cont{
-      background-color: none;
-   }
-
-   .tabview{
-      color: white;
-   }  
-
-  .table-curved{
-    border-collapse:separate;
-    border: solid 0px;
-    border-width: 0px !important;
-    border-radius: 5px;
-    padding: 5px !important;
-}
-
-   table.table-curved tr:first-child td:first-child, table.table-curved tr:first-child td:last-child {
-         border: solid 0px;
-         border-radius: 20px 20px 0 0;
-         border-width: 0px !important;
-         border-bottom: none;
-         border-left: none;
-         border-right: none;
-   }
-
-   table.table-curved tr:last-child td:first-child, table.table-curved tr:last-child td:last-child {
-      border: solid 0px;
-      border-radius: 0 0 20px 20px;
-      border-width: 0px !important;
-      border-top: none;
-      border-left: none;
-      border-right: none;
-   }
-
-   #tabMap{
-      padding: 0px;
-      width: inherit;
-   }
-
-   #map{
-      width: 768px;
-      height: 575px;
-      border: solid 1px white;
-   }
-
-   #rightNowTabLeft{
-      padding-right: 0px;
-   }
-}
-
 @media (min-width: 992px) {
    .seven-cols .col-md-1,
    .seven-cols .col-sm-1,
@@ -159,7 +101,7 @@
 
    #map{
       height: 435px;
-      width: 533px;
+      width: 519px;
       padding: 0px; 
       border: solid 1px white;
    }
@@ -218,7 +160,7 @@ table.table-curved tr:last-child td:first-child, table.table-curved tr:last-chil
 
 #map{
       height: 435px;
-      width: 533px;
+      width: 519px;
       padding: 0px; 
       border: solid 1px white;
    }

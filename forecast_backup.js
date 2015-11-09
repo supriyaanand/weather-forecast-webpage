@@ -13,10 +13,10 @@ $(document).ready(function(){
     },
     type: 'GET',
     success: function(output)  {
-                     var obj = JSON.parse(output);
-                     var html_display = drawDisplay(obj, form.city.value, form.state.value, form.degree.value);
+                     // parse the   data  here
+                     var html_display = drawDisplay(output, form.city.value, form.state.value, form.degree.value);
                      $('#results').html(html_display);
-                     getMap(obj['latitude'], obj['longitude']);
+                     getMap();
                    },
                    error:   function(){
                     alert('got something oopsie');
@@ -168,7 +168,8 @@ function clear_form(){
    document.getElementById('results').innerHTML = "";
  }
 
- function drawDisplay(obj, city, state, degree){
+ function drawDisplay(response, city, state, degree){
+   var obj = JSON.parse(response);
    var current_condition = obj['currently']['summary'];
    var nav_tabs = "<ul class='nav nav-tabs' role='tablist'><li role='presentation' class='active'><a href='#right-now' data-toggle='tab'>Right Now</a></li><li role='presentation'><a href='#next24hours' data-toggle='tab'>Next 24 Hours</a></li><li role='presentation'><a href='#next7days' data-toggle='tab'>Next 7 Days</a></li></ul>"
    var img_icon = obj['currently']['icon'];
@@ -275,56 +276,33 @@ $('a[data-toggle="tab"]').on('click', function (e) {
  var target = $(this.target).attr('href').tab('show');
 });
 
-function getMap(lat, lon){
-    var lat = lat;
-    var lon = lon;
-    var zoom = 8;
-    var opacity = 0.3;
-
-    var map = new OpenLayers.Map("map", 
-    {
-        units:'m',
-        projection: "EPSG:900913",
-        displayProjection: new OpenLayers.Projection("EPSG:4326")
-    });
-
+function getMap(){
+    var lat = 34.027696; 
+    var lon = -118.287324;
+    var lonlat = new OpenLayers.LonLat(lon, lat);
+    var map = new OpenLayers.Map("map");
     var mapnik = new OpenLayers.Layer.OSM();
-
     var layer_cloud = new OpenLayers.Layer.XYZ(
-        "clouds",
-        "http://${s}.tile.openweathermap.org/map/clouds/${z}/${x}/${y}.png",
-        //"http://wind.openweathermap.org/map/"+layer_name+"/${z}/${x}/${y}.png",
-        {
-//          numZoomLevels: 19, 
-            isBaseLayer: false,
-            opacity: opacity,
-            sphericalMercator: true
-
-        }
-    );
+      "clouds",
+      "http://${s}.tile.openweathermap.org/map/clouds/${z}/${x}/${y}.png",
+      {
+        isBaseLayer: false,
+        opacity: 0.7,
+        sphericalMercator: true
+      }
+      );
 
     var layer_precipitation = new OpenLayers.Layer.XYZ(
       "precipitation",
       "http://${s}.tile.openweathermap.org/map/precipitation/${z}/${x}/${y}.png",
       {
         isBaseLayer: false,
-        opacity: opacity,
+        opacity: 0.7,
         sphericalMercator: true
       }
       );
-
-    var centre = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), 
-                                new OpenLayers.Projection("EPSG:900913"));
-    map.addLayers([mapnik, layer_cloud, layer_precipitation]);
-    map.setCenter( centre, zoom);
-
-    map.events.register("mousemove", map, function (e) {
-        var position = map.getLonLatFromViewPortPx(e.xy).transform(new OpenLayers.Projection("EPSG:900913"), 
-                                new OpenLayers.Projection("EPSG:4326"));
-
-        $("#mouseposition").html("Lat: " + Math.round(position.lat*100)/100 + " Lon: " + Math.round(position.lon*100)/100 +
-            ' zoom: '+ map.getZoom());
-    });
+    map.addLayers([mapnik, layer_precipitation, layer_cloud]);
+    map.setCenter(lonlat, 5);
   }
 
   function getImageSource(img_icon){
