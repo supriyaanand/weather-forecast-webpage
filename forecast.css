@@ -22,6 +22,10 @@
     padding: 5px !important;
 }
 
+   table.table-curved{
+      height: 320px;
+   }
+
    table.table-curved tr:first-child td:first-child, table.table-curved tr:first-child td:last-child {
          border: solid 0px;
          border-radius: 20px 20px 0 0;
@@ -80,6 +84,10 @@
     padding: 5px !important;
 }
 
+table.table-curved{
+      height: 320px;
+   }
+
    table.table-curved tr:first-child td:first-child, table.table-curved tr:first-child td:last-child {
          border: solid 0px;
          border-radius: 20px 20px 0 0;
@@ -123,7 +131,7 @@
       margin: 5px;
    }
    .tabview{
-      padding: 5px 120px 10px 160px !important;
+      padding: 5px 70px 10px 230px !important;
       color: white;
    }  
 
@@ -137,6 +145,10 @@
       border-width: 0px !important;
       border-radius: 5px;
       padding: 0px !important;
+   }
+
+table.table-curved{
+      height: 320px;
    }
 
    table.table-curved tr:first-child td:first-child, table.table-curved tr:first-child td:last-child {
@@ -182,7 +194,7 @@
       margin: 5px;
    }
    .tabview{
-      padding: 5px 120px 10px 160px !important;
+      padding: 5px 70px 10px 230px !important;
       color: white;
    }  
 
@@ -196,6 +208,10 @@
       border-width: 0px !important;
       border-radius: 5px;
       padding: 0px !important;
+   }
+
+table.table-curved{
+      height: 320px;
    }
 
 table.table-curved tr:first-child td:first-child, table.table-curved tr:first-child td:last-child {
@@ -424,14 +440,25 @@ div.modal-content{
    margin: 0 auto !important;
 }
 
+.modalTable{
+   width: 100%;
+   text-align: center;
+}
+
 .modalTable th{
    width: 33%;
    text-align: center;
    font-weight: bold;
+   padding: 7px;
 }
 
 .modalTable td{
    width: 33%;
+   text-align: center;
+   padding: 7px;
+}
+
+.modal-body{
    text-align: center;
 }
 
@@ -446,4 +473,8 @@ div.modal-content{
    position: absolute;
    top: 100px;
    right: 25px;
+}
+
+strong{
+   font-size: 24pt;
 }
