@@ -58,6 +58,10 @@
    #rightNowTabLeft{
       padding-right: 0px;
    }
+
+   .control-group{
+      width: 100% !important;
+   }
 }
 
 @media (min-width: 768px){
@@ -112,8 +116,8 @@ table.table-curved tr:last-child td:first-child, table.table-curved tr:last-chil
    }
 
    #map{
-      width: 768px;
-      height: 575px;
+      width: 533px;
+      height: 445px;
       border: solid 1px white;
    }
 
@@ -124,6 +128,10 @@ table.table-curved tr:last-child td:first-child, table.table-curved tr:last-chil
    .modal-body{ 
       max-height:100%;
       height:350px; 
+   }
+
+   #address{
+      width:250px;
    }
 }
 
@@ -175,7 +183,7 @@ table.table-curved{
    }
 
    #map{
-      height: 435px;
+      height: 445px;
       width: 533px;
       padding: 0px; 
       border: solid 1px white;
@@ -238,7 +246,7 @@ table.table-curved tr:last-child td:first-child, table.table-curved tr:last-chil
 }
 
 #map{
-      height: 435px;
+      height: 445px;
       width: 533px;
       padding: 0px; 
       border: solid 1px white;
@@ -462,6 +470,12 @@ div.modal-content{
    padding: 5px;
 }
 
+.modalTable td.tempPad{
+   text-align: center;
+   padding-top: 5px;
+   padding-bottom: 5px;
+}
+
 #postFB{
    width: 30px;
    height: 30px;
@@ -481,4 +495,8 @@ strong{
 
 a{
    outline: 0px !important;
+}
+
+.invalid{
+   color:red;
 }

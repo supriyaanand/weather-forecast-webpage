@@ -4,58 +4,6 @@ $('a[data-toggle="tab"]').on('click', function (e) {
     var target = $(this.target).attr('href').tab('show');
     });
    
- $('form#form-collect').on('submit' , function(e){
-   e.preventDefault();
-   form = document.forms[0]
-   var valid = getForecast(form);
-   if (valid) {
-    $.ajax({ 
-     url:  '/hw8/forecast.php?',
-     data: {  address: form.address.value,  
-      city:  form.city.value,
-      state: form.state.value,
-      degree: form.degree.value 
-    },
-    type: 'GET',
-    success: function(output)  {
-                     var obj = JSON.parse(output);
-                     var html_display = drawDisplay(obj, form.city.value, form.state.value, form.degree.value);
-                     $('#results').html(html_display);
-                     getMap(obj['latitude'], obj['longitude']);
-                   },
-                   error:   function(){
-                    alert('got something oopsie');
-                  }
-                });
-  }
-});
-
-function getForecast(form) {
- var error = false;
-
- if(form.address.value == '') {
-  var error_message = "Please enter the street address";
-  document.getElementById('street-error').innerHTML = error_message;
-  error = true;
-}
-if(form.city.value == ''){
-  var error_message = "Please enter the city";
-  document.getElementById('city-error').innerHTML = error_message;
-  error = true;
-}
-if(form.state.value == ''){
-  var error_message = "Please select a state";
-  document.getElementById('state-error').innerHTML = error_message;
-  error = true;
-}
-if(error) {
-  return false;
-}
-else {
-  return true;   
-}
-}
-
 function clear_form(){
  document.getElementById('address').value = "";
  document.getElementById('city').value = "";
@@ -69,7 +17,7 @@ function clear_form(){
 }
 
 function drawDisplay(obj, city, state, degree){
-   $('#location_string').val(city + ', ' + state);
+   $('#location_string').val(city.capitalize() + ', ' + state);
    var timezone = obj['timezone'];
    var current_condition = obj['currently']['summary'];
    var nav_tabs = "<ul class='nav nav-tabs' role='tablist'><li role='presentation' class='active'><a href='#right-now' data-toggle='tab'>Right Now</a></li><li role='presentation'><a href='#next24hours' data-toggle='tab'>Next 24 Hours</a></li><li role='presentation'><a href='#next7days' data-toggle='tab'>Next 7 Days</a></li></ul>"
@@ -124,7 +72,7 @@ function drawDisplay(obj, city, state, degree){
    $('#curConString').val(current_condition + ", " + temp + "&deg;" + unit);
 
    var tab_one_left_top_sect_one = "<div class='row' id='left_top'><div class='col-md-6'>" + "\n" + "<img src='" + img_src + "' alt='" + current_condition + "' title='" + current_condition + "' width='130px' height='120px' class='img_icon center-block'></div>";
-   var tab_one_left_top_sect_two = "<div class='col-md-6'>" + "\n" + "<span style='color:white;'><h5 class='h5 text-center'>" + current_condition + " in " + city + ", " + state + "</h5></span>" + "<span style='color:white;'><h1 class='h1 text-center'>" + temp + " <sup id='temp_sup'>&deg;" + unit + "</sup>"+ "</h1></span>" + "<h5 class='h5 text-center'><span style='color:blue;'>L: " + minTemp + "&deg;</span> | <span style='color:green;'>H: " + maxTemp + "&deg;</span><input type='button' id='postFB'></input></h5></div></div>";
+   var tab_one_left_top_sect_two = "<div class='col-md-6'>" + "\n" + "<span style='color:white;'><h5 class='h5 text-center'>" + current_condition + " in " + city.capitalize() + ", " + state + "</h5></span>" + "<span style='color:white;'><h1 class='h1 text-center'>" + temp + " <sup id='temp_sup'>&deg;" + unit + "</sup>"+ "</h1></span>" + "<h5 class='h5 text-center'><span style='color:blue;'>L: " + minTemp + "&deg;</span> | <span style='color:green;'>H: " + maxTemp + "&deg;</span><input type='button' id='postFB'></input></h5></div></div>";
    var tab_one_table = "<div class='row'><div class='col-md-12' style='padding-right:0px;padding-left:0px;'><table class='table table-striped' id='tableData'>" + 
    "<tr><td>Precipitation</td><td>" + precipitation_text + "</td></tr>" + 
    "<tr><td>Chance of Rain</td><td>" + chance_of_rain + '%' + "</td></tr>" + 
@@ -188,7 +136,7 @@ function drawDisplay(obj, city, state, degree){
     modal_string += '<div id="myModal' + i.toString() + '" class="modal fade" role="dialog" aria-hidden="true">';
     modal_string += '<div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header">';
     modal_string += '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
-    modal_string += '<h4>Weather in ' + city + ' on ' + moment(daily_array[i]['time'] * 1000).tz(timezone).format('MMM DD') + '</h4>';
+    modal_string += '<h4>Weather in ' + city.capitalize() + ' on ' + moment(daily_array[i]['time'] * 1000).tz(timezone).format('MMM DD') + '</h4>';
     modal_string += '</div>';
     var windSpeed = daily_array[i]['windSpeed'];
     if(unit == "celsius"){
