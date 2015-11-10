@@ -1,6 +1,4 @@
 $(document).ready(function(){
-    // document.write('script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js" ></script>');
-    // document.write('script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.4.1/moment-timezone.min.js" ></script>');
 
 $('a[data-toggle="tab"]').on('click', function (e) {
     var target = $(this.target).attr('href').tab('show');
@@ -102,10 +100,22 @@ function drawDisplay(obj, city, state, degree){
     precipitation_text = 'Heavy';
   }
   var chance_of_rain = obj['currently']['precipProbability'] * 100;
-  var windSpeed = Math.round(obj['currently']['windSpeed']);
-  var dewPoint = Math.round(obj['currently']['dewPoint']);
+  var windSpeed = obj['currently']['windSpeed'].toFixed(2);
+  if(unit == "celsius"){
+    windSpeed += " m/s";
+  }
+  else{
+    windSpeed += " mph";
+  }
+  var dewPoint = obj['currently']['dewPoint'].toFixed(2);
   var humidity = obj['currently']['humidity'] * 100;
-  var visibility = Math.round(obj['currently']['visibility']);
+  var visibility = Math.round(obj['currently']['visibility']).toFixed(2);
+  if(unit == "celsius"){
+    visibility += " km";
+  }
+  else{
+    visibility += " mi";
+  }
    var sunrise = obj['daily']['data'][0]['sunriseTime'];
    var sunset = obj['daily']['data'][0]['sunsetTime'];
    var riseTime = moment(sunrise * 1000).tz(timezone).format('hh:mm A');
@@ -118,10 +128,10 @@ function drawDisplay(obj, city, state, degree){
    var tab_one_table = "<div class='row'><div class='col-md-12' style='padding-right:0px;padding-left:0px;'><table class='table table-striped' id='tableData'>" + 
    "<tr><td>Precipitation</td><td>" + precipitation_text + "</td></tr>" + 
    "<tr><td>Chance of Rain</td><td>" + chance_of_rain + '%' + "</td></tr>" + 
-   "<tr><td>Wind Speed</td><td>" + windSpeed + ' mph' + "</td></tr>" + 
+   "<tr><td>Wind Speed</td><td>" + windSpeed + "</td></tr>" + 
    "<tr><td>Dew Point</td><td>" + dewPoint + " &deg;" + unit + "</td></tr>" + 
    "<tr><td>Humidity</td><td>" + humidity + '%' + "</td></tr>" + 
-   "<tr><td>Visibility</td><td>" + visibility + ' mi' + "</td></tr>" + 
+   "<tr><td>Visibility</td><td>" + visibility + "</td></tr>" + 
    "<tr><td>Sunrise</td><td>" + riseTime + "</td></tr>" + 
    "<tr><td>Sunset</td><td>" + setTime + "</td></tr>" + 
    "</table></div></div>";
@@ -135,14 +145,32 @@ function drawDisplay(obj, city, state, degree){
    for(var i=0;i < 24;i++){
     accordion_string += '<div class="accordion-group">';
     accordion_string += '<div class="accordion-heading">';
-    accordion_string += '<table class="table tableDatatab2"><tr><td>' + moment(hourly_array[i]['time'] * 1000).tz(timezone).format('hh:mm A') + '</td><td><img src="' + getImageSource(hourly_array[i]['icon']) + '" alt="' + current_condition + '" title="' + current_condition + '" width="40px" height="40px"></td><td>' + Math.round(hourly_array[i]['cloudCover'] * 100) + '%</td><td>' + hourly_array[i]['temperature'] + '</td>';
+    accordion_string += '<table class="table tableDatatab2"><tr><td>' + moment(hourly_array[i]['time'] * 1000).tz(timezone).format('hh:mm A') + '</td><td><img src="' + getImageSource(hourly_array[i]['icon']) + '" alt="' + current_condition + '" title="' + current_condition + '" width="40px" height="40px"></td><td>' + Math.round(hourly_array[i]['cloudCover'] * 100) + '%</td><td>' + hourly_array[i]['temperature'].toFixed(2) + '</td>';
     accordion_string += '<td><a class="accordion-toggle" data-toggle="collapse" data-parent="#tab_accordion" href="#collapse' + i.toString() + '">';
     accordion_string += '<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>';
     accordion_string += '</a></td></tr></table>';
     accordion_string += '</div>';
     accordion_string += '<div id="collapse' + i.toString() + '"' + 'class="accordion-body collapse">';
     accordion_string += '<div class="accordion-inner" id="accData">';
-    accordion_string += '<table class="table tableDatatab3"><tr><th>Wind</th><th>Humidity</th><th>Visibility</th><th>Pressure</th></tr><tr></table><table class="table tableDatatab4"><tr><td>' + hourly_array[i]['windSpeed'] + '</td><td>' + Math.round(hourly_array[i]['humidity'] * 100) + '%</td><td>' + hourly_array[i]['visibility'] + '</td><td>' + hourly_array[i]['pressure'] + '</td></tr></table>';
+    var windSpeed = hourly_array[i]['windSpeed'];
+    if(unit == "celsius"){
+        windSpeed += "m/s";
+    }else{
+        windSpeed += "mph";
+    }
+    var visibility = hourly_array[i]['visibility'];
+    if(unit == "celsius"){
+        visibility += "km";
+    }else{
+        visibility += "mi";
+    }
+    var pressure = hourly_array[i]['pressure'];
+    if(unit == "celsius"){
+        pressure += "hPa";
+    }else{
+        pressure += "mb";
+    }
+    accordion_string += '<table class="table tableDatatab3"><tr><th>Wind</th><th>Humidity</th><th>Visibility</th><th>Pressure</th></tr><tr></table><table class="table tableDatatab4"><tr><td>' + windSpeed + '</td><td>' + Math.round(hourly_array[i]['humidity'] * 100) + '%</td><td>' + visibility + '</td><td>' + pressure + '</td></tr></table>';
     accordion_string += '</div>';
     accordion_string += '</div>';
     accordion_string += '</div>';
@@ -162,10 +190,28 @@ function drawDisplay(obj, city, state, degree){
     modal_string += '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
     modal_string += '<h4>Weather in ' + city + ' on ' + moment(daily_array[i]['time'] * 1000).tz(timezone).format('MMM DD') + '</h4>';
     modal_string += '</div>';
+    var windSpeed = daily_array[i]['windSpeed'];
+    if(unit == "celsius"){
+        windSpeed += "m/s";
+    }else{
+        windSpeed += "mph";
+    }
+    var visibility = daily_array[i]['visibility'];
+    if(unit == "celsius"){
+        visibility += "km";
+    }else{
+        visibility += "mi";
+    }
+    var pressure = daily_array[i]['pressure'];
+    if(unit == "celsius"){
+        pressure += "hPa";
+    }else{
+        pressure += "mb";
+    }
     modal_string += '<div class="modal-body">';
-    modal_string += '<p><div class="text-center"><img width="90px" height="90px" src="' + getImageSource(daily_array[i]['icon']) + '"></div><br><div style="margin:0 auto;"><h4 class="text-center">' + moment(daily_array[i]['time'] * 1000).tz(timezone).format('dddd') + ': ' + '<span style="color:#FF9900;">' + daily_array[i]['summary'] + '</span></h4><br>';
-    modal_string += '<table class="modalTable"><tr><th>Sunrise Time</th><th>Sunset Time</th><th>Humidity</th></tr><tr><td>' + moment(daily_array[i]['sunriseTime'] * 1000).tz(timezone).format('hh:mm A') + '</td><td>' + moment(daily_array[i]['sunsetTime'] * 1000).tz(timezone).format('hh:mm A') + '</td><td>' + Math.round(daily_array[i]['humidity']) + '%</td></tr>';
-    modal_string += '<tr><th>Wind Speed</th><th>Visibility</th><th>Pressure</th></tr><tr><td>' + daily_array[i]['windSpeed'] + '</td><td>' + daily_array[i]['visibility'] + '</td><td>' + daily_array[i]['pressure'] + '</td></tr></table></div></p>';
+    modal_string += '<p><div class="text-center"><img width="90px" height="90px" src="' + getImageSource(daily_array[i]['icon']) + '"></div><br><div style="margin:0 auto;"><h4 class="text-center">' + moment(daily_array[i]['time'] * 1000).tz(timezone).format('dddd') + ': ' + '<span style="color:#FF9900;">' + daily_array[i]['summary'] + '</span></h4></div><br>';
+    modal_string += '<table class="modalTable"><tr><th>Sunrise Time</th><th>Sunset Time</th><th>Humidity</th></tr><tr><td>' + moment(daily_array[i]['sunriseTime'] * 1000).tz(timezone).format('hh:mm A') + '</td><td>' + moment(daily_array[i]['sunsetTime'] * 1000).tz(timezone).format('hh:mm A') + '</td><td>' + Math.round(daily_array[i]['humidity'] * 100) + '%</td></tr>';
+    modal_string += '<tr><th>Wind Speed</th><th>Visibility</th><th>Pressure</th></tr><tr><td>' + windSpeed + '</td><td>' + visibility + '</td><td>' + pressure + '</td></tr></table></p>';
     modal_string += '</div>';
     modal_string += '<div class="modal-footer">';
     modal_string += '<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>';
@@ -195,9 +241,7 @@ function getMap(lat, lon){
     var layer_cloud = new OpenLayers.Layer.XYZ(
         "clouds",
         "http://${s}.tile.openweathermap.org/map/clouds/${z}/${x}/${y}.png",
-        //"http://wind.openweathermap.org/map/"+layer_name+"/${z}/${x}/${y}.png",
         {
-//          numZoomLevels: 19, 
             isBaseLayer: false,
             opacity: opacity,
             sphericalMercator: true
