@@ -363,7 +363,7 @@ function getMap(lat, lon){
          var pic = $('#img_src').val();
          var name = 'Current Weather in ' + loc;
          var desc = $('#curConString').val();
-         var caption = 'WEATHER INFORMATION FROM <a href="www.forecast.io">FORECAST.IO</a>';
+         var caption = 'WEATHER INFORMATION FROM <a href="http://forecast.io">FORECAST.IO</a>';
          FB.ui({
             method: 'feed',
             name: name ,
@@ -371,7 +371,11 @@ function getMap(lat, lon){
             picture: pic,
             caption: caption,
             description: desc,
-            message: ''
+            message: '',
+            properties : "WEATHER INFORMATION FROM" : {
+                'text' : 'FORECAST.IO',
+                'href' : 'http://forecast.io',
+            }
          },
         // callback
          function(response) {
