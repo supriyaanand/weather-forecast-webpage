@@ -1,11 +1,16 @@
 $(document).ready(function(){
+
+$('a[data-toggle="tab"]').on('click', function (e) {
+    var target = $(this.target).attr('href').tab('show');
+    });
+   
  $('form#form-collect').on('submit' , function(e){
    e.preventDefault();
    form = document.forms[0]
    var valid = getForecast(form);
    if (valid) {
     $.ajax({ 
-     url:  'http://localhost/forecast.php?',
+     url:  '/forecast.php?',
      data: {  address: form.address.value,  
       city:  form.city.value,
       state: form.state.value,
@@ -169,10 +174,12 @@ function clear_form(){
  }
 
  function drawDisplay(obj, city, state, degree){
+   $('#location_string').val(city + ', ' + state);
    var current_condition = obj['currently']['summary'];
    var nav_tabs = "<ul class='nav nav-tabs' role='tablist'><li role='presentation' class='active'><a href='#right-now' data-toggle='tab'>Right Now</a></li><li role='presentation'><a href='#next24hours' data-toggle='tab'>Next 24 Hours</a></li><li role='presentation'><a href='#next7days' data-toggle='tab'>Next 7 Days</a></li></ul>"
    var img_icon = obj['currently']['icon'];
    var img_src = getImageSource(img_icon);
+   $('#img_src').val(img_src);
    var unit;
    if(degree == "celcius"){
     unit = "C";
@@ -207,8 +214,10 @@ function clear_form(){
    var riseTime = new Date(sunrise * 1000).format('h:i A');
    var setTime = new Date(sunset * 1000).format('h:i A');
 
+   $('#curConString').val(current_condition + ", " + temp + "&deg;" + unit);
+
    var tab_one_left_top_sect_one = "<div class='row' id='left_top'><div class='col-md-6'>" + "\n" + "<img src='" + img_src + "' alt='" + current_condition + "' title='" + current_condition + "' width='130px' height='120px' class='img_icon center-block'></div>";
-   var tab_one_left_top_sect_two = "<div class='col-md-6'>" + "\n" + "<span style='color:white;'><h5 class='h5 text-center'>" + current_condition + " in " + city + ", " + state + "</h5></span>" + "<span style='color:white;'><h1 class='h1 text-center'>" + temp + " <sup id='temp_sup'>&deg;" + unit + "</sup>"+ "</h1></span>" + "<h5 class='h5 text-center'><span style='color:blue;'>L: " + minTemp + "&deg;</span> | <span style='color:green;'>H: " + maxTemp + "&deg;</span></h5></div></div>";
+   var tab_one_left_top_sect_two = "<div class='col-md-6'>" + "\n" + "<span style='color:white;'><h5 class='h5 text-center'>" + current_condition + " in " + city + ", " + state + "</h5></span>" + "<span style='color:white;'><h1 class='h1 text-center'>" + temp + " <sup id='temp_sup'>&deg;" + unit + "</sup>"+ "</h1></span>" + "<h5 class='h5 text-center'><span style='color:blue;'>L: " + minTemp + "&deg;</span> | <span style='color:green;'>H: " + maxTemp + "&deg;</span><input type='button' id='postFB'></input></h5></div></div>";
    var tab_one_table = "<div class='row'><div class='col-md-12' style='padding-right:0px;padding-left:0px;'><table class='table table-striped' id='tableData'>" + 
    "<tr><td>Precipitation</td><td>" + precipitation_text + "</td></tr>" + 
    "<tr><td>Chance of Rain</td><td>" + chance_of_rain + '%' + "</td></tr>" + 
@@ -270,10 +279,6 @@ function clear_form(){
   var html_string = nav_tabs + "<div class='tab-content'>" + tab_one + tab_two + tab_three + "</div>";
   return html_string;
 }
-
-$('a[data-toggle="tab"]').on('click', function (e) {
- var target = $(this.target).attr('href').tab('show');
-});
 
 function getMap(lat, lon){
     var lat = lat;

@@ -10,6 +10,52 @@
    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body> 
+   <script type="text/javascript">
+   $(document).ready(function(){
+      window.fbAsyncInit = function() {
+         FB.init({
+            appId      : '867570133362370',
+            xfbml      : true,
+            version    : 'v2.5'
+          });
+      };
+      (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+
+      $("#results").on('click', '#postFB', function(e){
+         e.preventDefault();
+         var loc = $('#location_string').val();
+         var pic = $('#img_src').val();
+         var name = 'Current Weather in ' + loc;
+         var desc = $('#curConString').val();
+         var caption = 'WEATHER INFORMATION FROM <a href="www.forecast.io">FORECAST.IO</a>';
+         FB.ui({
+            method: 'feed',
+            name: name ,
+            link: 'http://weathertrust-env.elasticbeanstalk.com/',
+            picture: pic,
+            caption: caption,
+            description: desc,
+            message: ''
+         },
+        // callback
+         function(response) {
+         if (response && !response.error_message) {
+         alert('Posting completed.');
+            } else {
+               alert(response);
+               alert(response.error_message);
+               alert('Error while posting.');
+            }
+         });
+      });   
+   });   
+   </script>
    <div class="container-fluid">
       <div style="text-align:center;"><h2> Forecast Search </h2></div><br>
       <div class="row">
@@ -115,6 +161,9 @@
                   </div>
                </div>
                <br><br>
+               <input type="hidden" id="location_string">
+               <input type="hidden" id="img_src">
+               <input type="hidden" id="curConString">
          </form>
       </div>
       <div class="col-xs-1"></div> 
