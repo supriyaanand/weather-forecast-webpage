@@ -197,10 +197,15 @@ function drawDisplay(obj, city, state, degree){
         windSpeed += "mph";
     }
     var visibility = daily_array[i]['visibility'];
-    if(unit == "celsius"){
-        visibility += "km";
-    }else{
-        visibility += "mi";
+    if(visibility != undefined){
+        if(unit == "celsius"){
+            visibility += "km";
+        }else{
+            visibility += "mi";
+        }
+    }
+    else{
+        visibility = "N/A";
     }
     var pressure = daily_array[i]['pressure'];
     if(unit == "celsius"){
@@ -210,9 +215,17 @@ function drawDisplay(obj, city, state, degree){
     }
     modal_string += '<div class="modal-body">';
     modal_string += '<p><div class="text-center"><img width="90px" height="90px" src="' + getImageSource(daily_array[i]['icon']) + '"></div><br><div style="margin:0 auto;"><h4 class="text-center">' + moment(daily_array[i]['time'] * 1000).tz(timezone).format('dddd') + ': ' + '<span style="color:#FF9900;">' + daily_array[i]['summary'] + '</span></h4></div><br>';
-    modal_string += '<table class="modalTable"><tr><th>Sunrise Time</th><th>Sunset Time</th><th>Humidity</th></tr><tr><td>' + moment(daily_array[i]['sunriseTime'] * 1000).tz(timezone).format('hh:mm A') + '</td><td>' + moment(daily_array[i]['sunsetTime'] * 1000).tz(timezone).format('hh:mm A') + '</td><td>' + Math.round(daily_array[i]['humidity'] * 100) + '%</td></tr>';
-    modal_string += '<tr><th>Wind Speed</th><th>Visibility</th><th>Pressure</th></tr><tr><td>' + windSpeed + '</td><td>' + visibility + '</td><td>' + pressure + '</td></tr></table></p>';
+    modal_string += '<div class="col-md-1"></div><div class="col-md-10">';
+    modal_string += '<div class="row">';
+    modal_string += '<div class="col-md-4"><table class="modalTable"><tr><th>Sunrise Time</th></tr><tr><td>' + moment(daily_array[i]['sunriseTime'] * 1000).tz(timezone).format('hh:mm A') + '</td></tr></table></div>';
+    modal_string += '<div class="col-md-4"><table class="modalTable"><tr><th>Sunset Time</th></tr><tr><td>' + moment(daily_array[i]['sunsetTime'] * 1000).tz(timezone).format('hh:mm A') + '</td></tr></table></div>';
+    modal_string += '<div class="col-md-4"><table class="modalTable"><tr><th>Humidity</th></tr><tr><td>' + Math.round(daily_array[i]['humidity'] * 100) + '%</td></tr></table></div>';
+    modal_string += '</div><div class="row">';
+    modal_string += '<div class="col-md-4"><table class="modalTable"><tr><th>Wind Speed</th></tr><tr><td>' + windSpeed + '</td></tr></table></div>';
+    modal_string += '<div class="col-md-4"><table class="modalTable"><tr><th>Visibility</th></tr><tr><td>' + visibility + '</td></tr></table></div>';
+    modal_string += '<div class="col-md-4"><table class="modalTable"><tr><th>Pressure</th></tr><tr><td>' + pressure + '</td></tr></table></div>';
     modal_string += '</div>';
+    modal_string += '</div><div class="col-md-1"></div></div>';
     modal_string += '<div class="modal-footer">';
     modal_string += '<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>';
     modal_string += '</div></div></div></div>';
