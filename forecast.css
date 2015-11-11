@@ -257,6 +257,10 @@ table.table-curved tr:last-child td:first-child, table.table-curved tr:last-chil
       border: solid 1px white;
    }
 
+   #address{
+      width:300px;
+   }
+
 }
 
 td{
@@ -269,6 +273,7 @@ h3 {
 
 body {
    background-image: url('http://cs-server.usc.edu:45678/hw/hw8/images/bg.jpg');
+   background-repeat: repeat-x;
 }
 
 .logo{

@@ -232,7 +232,16 @@ function getMap(lat, lon){
             ' zoom: '+ map.getZoom());
     });
 
+    var width = $('#rightNowTabLeft').css('width');
+    $('#tabMap').css('width',width);
+    $('#map').css('width',width);
   }
+
+    $(window).resize(function(){
+        var width = $('#rightNowTabLeft').css('width');
+        $('#tabMap').css('width',width);
+        $('#map').css('width',width);
+    });
 
   function getImageSource(img_icon){
    var img_src = "";
