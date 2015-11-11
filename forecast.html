@@ -308,7 +308,7 @@ function getMap(lat, lon){
               },
             submitHandler: function(form) {
              $.ajax({ 
-                 url:  '/hw8/forecast.php?',
+                 url:  '/forecast.php?',
                  data: {  address: form.address.value,  
                   city:  form.city.value,
                   state: form.state.value,
@@ -319,12 +319,11 @@ function getMap(lat, lon){
                               $.getScript('forecast.js');
                               var obj = JSON.parse(output);
                               var html_display = drawDisplay(obj, form.city.value, form.state.value, form.degree.value);
-                              console.log(html_display);
                               $('#results').html(html_display);
                               getMap(obj['latitude'], obj['longitude']);
                             },
                             error:   function(){
-                             alert('got something oopsie');
+                             alert('Oops, something went wrong! Please refresh and try again.');
                            }
                          });
                      }
@@ -363,28 +362,22 @@ function getMap(lat, lon){
          var pic = $('#img_src').val();
          var name = 'Current Weather in ' + loc;
          var desc = $('#curConString').val();
-         var caption = 'WEATHER INFORMATION FROM <a href="http://forecast.io">FORECAST.IO</a>';
+         var caption = 'WEATHER INFORMATION FROM FORECAST.IO';
          FB.ui({
             method: 'feed',
             name: name ,
-            link: 'http://weathertrust-env.elasticbeanstalk.com/',
+            link: 'http://forecast.io/',
             picture: pic,
             caption: caption,
             description: desc,
             message: '',
-            properties : "WEATHER INFORMATION FROM" : {
-                'text' : 'FORECAST.IO',
-                'href' : 'http://forecast.io',
-            }
          },
         // callback
          function(response) {
          if (response && !response.error_message) {
-         alert('Posting completed.');
+         alert('Posted Successfully.');
             } else {
-               alert(response);
-               alert(response.error_message);
-               alert('Error while posting.');
+               alert('Not Posted.');
             }
          });
       });   
