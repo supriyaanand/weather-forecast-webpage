@@ -83,7 +83,7 @@ function drawDisplay(obj, city, state, degree){
    "<tr><td>Sunset</td><td>" + setTime + "</td></tr>" + 
    "</table></div></div>";
 
-    var mapData = "<div id='tabMap' class='col-md-6'><div id='map'></div></div>";
+    var mapData = "<div id='tabMap' class='col-md-6'><div id='map' class='col-md-6'></div></div>";
 
    var tab_one = "<div role='tabpanel' class='tab-pane active' id='right-now'>" + "<div id='rightNowTabLeft' class='col-md-6'>" + "\n" + tab_one_left_top_sect_one + tab_one_left_top_sect_two + tab_one_table + "</div>" + mapData + "</div>";
 
@@ -231,6 +231,7 @@ function getMap(lat, lon){
         $("#mouseposition").html("Lat: " + Math.round(position.lat*100)/100 + " Lon: " + Math.round(position.lon*100)/100 +
             ' zoom: '+ map.getZoom());
     });
+
   }
 
   function getImageSource(img_icon){
@@ -308,7 +309,7 @@ function getMap(lat, lon){
               },
             submitHandler: function(form) {
              $.ajax({ 
-                 url:  '/forecast.php?',
+                 url:  '/hw8/forecast.php?',
                  data: {  address: form.address.value,  
                   city:  form.city.value,
                   state: form.state.value,

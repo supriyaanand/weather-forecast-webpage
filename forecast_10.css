@@ -46,19 +46,23 @@
 
    #tabMap{
       padding: 0px;
-      width: 320px;
-      height: 605px;
+      width: inherit;
    }
+
+   /*#map{
+      width: 335px;
+      height: 575px;
+      border: solid 1px white;
+   }*/
 
    #map{
       width: inherit;
       height: inherit;
       border: solid 1px white;
-      -moz-box-sizing: border-box;
    }
 
    #rightNowTabLeft{
-      padding-right: 15px;
+      padding-right: 0px;
    }
 
    .control-group{
@@ -113,15 +117,24 @@ table.table-curved tr:last-child td:first-child, table.table-curved tr:last-chil
    }
 
    #tabMap{
-      width: 768px;
-      height: 605px;
+      padding: 0px;
+      width: inherit;
    }
+
+   /*#map{
+      width: 533px;
+      height: 445px;
+      border: solid 1px white;
+   }*/
 
    #map{
       width: inherit;
       height: inherit;
       border: solid 1px white;
-      -moz-box-sizing: border-box;
+   }
+
+   #rightNowTabLeft{
+      padding-right: 0px;
    }
 
    .modal-body{ 
@@ -181,16 +194,21 @@ table.table-curved{
       border-right: none;
    }
 
-   #tabMap{
-      padding: 0px !important;
+   /*#map{
+      height: 445px;
       width: 533px;
-      height: 447px;
-   }
+      padding: 0px; 
+      border: solid 1px white;
+   }*/
 
    #map{
-      width: 533px;
-      height: 447px;
+      width: inherit;
+      height: inherit;
       border: solid 1px white;
+   }
+
+   #rightNowTabLeft{
+      padding-right: 0px;
    }
 }
 
@@ -245,18 +263,22 @@ table.table-curved tr:last-child td:first-child, table.table-curved tr:last-chil
    border-right: none;
 }
 
-#tabMap{
-      padding: 0px !important;
+/*#map{
+      height: 445px;
       width: 533px;
-      height: 447px;
-   }
+      padding: 0px; 
+      border: solid 1px white;
+   }*/
 
 #map{
-      width: 533px;
-      height: 447px;
+      width: inherit;
+      height: inherit;
       border: solid 1px white;
    }
 
+#rightNowTabLeft{
+      padding-right: 0px;
+   }
 }
 
 td{
@@ -297,11 +319,11 @@ div#radio{
 
 @media(max-width:768px){
    span.radio-label-fah {
-      margin-left: 5px;
+      margin-left: 15px;
       margin-right: 25px;
    }
    span.radio-label-cel {
-      margin-left: 5px;
+      margin-left: -5px;
    }
    label{
       margin-top:8px;
@@ -310,12 +332,7 @@ div#radio{
    .radio-inline{
       margin-top:0px;
    }
-
-   #tabMap{
-      padding: 0px;
-   }
 }
-
 
 .radio-inline{
    padding:1px;
