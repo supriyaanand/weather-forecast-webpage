@@ -48,7 +48,7 @@ function drawDisplay(obj, city, state, degree){
   }
   var chance_of_rain = obj['currently']['precipProbability'] * 100;
   var windSpeed = obj['currently']['windSpeed'].toFixed(2);
-  if(unit == "celsius"){
+  if(degree == "celsius"){
     windSpeed += " m/s";
   }
   else{
@@ -57,7 +57,7 @@ function drawDisplay(obj, city, state, degree){
   var dewPoint = obj['currently']['dewPoint'].toFixed(2);
   var humidity = obj['currently']['humidity'] * 100;
   var visibility = Math.round(obj['currently']['visibility']).toFixed(2);
-  if(unit == "celsius"){
+  if(degree == "celsius"){
     visibility += " km";
   }
   else{
@@ -100,19 +100,19 @@ function drawDisplay(obj, city, state, degree){
     accordion_string += '<div id="collapse' + i.toString() + '"' + 'class="accordion-body collapse">';
     accordion_string += '<div class="accordion-inner" id="accData">';
     var windSpeed = hourly_array[i]['windSpeed'];
-    if(unit == "celsius"){
+    if(degree == "celsius"){
         windSpeed += "m/s";
     }else{
         windSpeed += "mph";
     }
     var visibility = hourly_array[i]['visibility'];
-    if(unit == "celsius"){
+    if(degree == "celsius"){
         visibility += "km";
     }else{
         visibility += "mi";
     }
     var pressure = hourly_array[i]['pressure'];
-    if(unit == "celsius"){
+    if(degree == "celsius"){
         pressure += "hPa";
     }else{
         pressure += "mb";
@@ -135,17 +135,17 @@ function drawDisplay(obj, city, state, degree){
     modal_string += '<div id="myModal' + i.toString() + '" class="modal fade" role="dialog" aria-hidden="true">';
     modal_string += '<div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header">';
     modal_string += '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
-    modal_string += '<h4>Weather in ' + city.capitalize() + ' on ' + moment(daily_array[i]['time'] * 1000).tz(timezone).format('MMM DD') + '</h4>';
+    modal_string += '<h5>Weather in ' + city.capitalize() + ' on ' + moment(daily_array[i]['time'] * 1000).tz(timezone).format('MMM DD') + '</h5>';
     modal_string += '</div>';
     var windSpeed = daily_array[i]['windSpeed'];
-    if(unit == "celsius"){
+    if(degree == "celsius"){
         windSpeed += "m/s";
     }else{
         windSpeed += "mph";
     }
     var visibility = daily_array[i]['visibility'];
     if(visibility != undefined){
-        if(unit == "celsius"){
+        if(degree == "celsius"){
             visibility += "km";
         }else{
             visibility += "mi";
@@ -155,7 +155,7 @@ function drawDisplay(obj, city, state, degree){
         visibility = "N.A";
     }
     var pressure = daily_array[i]['pressure'];
-    if(unit == "celsius"){
+    if(degree == "celsius"){
         pressure += "hPa";
     }else{
         pressure += "mb";
@@ -188,6 +188,8 @@ function getMap(lat, lon){
     var lon = lon;
     var zoom = 8;
     var opacity = 0.3;
+
+    try{
 
     var map = new OpenLayers.Map("map", 
     {
@@ -235,6 +237,12 @@ function getMap(lat, lon){
     var width = $('#rightNowTabLeft').css('width');
     $('#tabMap').css('width',width);
     $('#map').css('width',width);
+
+    }
+    catch(err){
+        $('#map').html("Map Unavailable! Please try later.");
+    }
+
   }
 
     $(window).resize(function(){
@@ -318,7 +326,7 @@ function getMap(lat, lon){
               },
             submitHandler: function(form) {
              $.ajax({ 
-                 url:  '/hw8/forecast.php?',
+                 url:  '/forecast.php?',
                  data: {  address: form.address.value,  
                   city:  form.city.value,
                   state: form.state.value,

@@ -64,6 +64,19 @@
    .control-group{
       width: 100% !important;
    }
+
+   #postFB{
+   width: 30px;
+   height: 30px;
+   background-image: url(http://cs-server.usc.edu:45678/hw/hw8/images/fb_icon.png);
+   background-repeat: no-repeat;
+   background-size: 100%;
+   background-color: #FF8080;
+   border: none;
+   position: absolute;
+   top: 90px !important;
+   right: 15px !important; 
+}
 }
 
 @media (min-width: 768px){
@@ -273,7 +286,6 @@ h3 {
 
 body {
    background-image: url('http://cs-server.usc.edu:45678/hw/hw8/images/bg.jpg');
-   background-repeat: repeat-x;
 }
 
 .logo{
@@ -300,6 +312,16 @@ div#radio{
    position: relative;
 }
 
+@media(max-width:480px){
+   span.radio-label-fah {
+      margin-left: 15px !important;
+      margin-right: 25px;
+   }
+   span.radio-label-cel {
+      margin-left: -5px !important;
+   }
+}   
+
 @media(max-width:768px){
    span.radio-label-fah {
       margin-left: 5px;
@@ -321,6 +343,11 @@ div#radio{
    }
 }
 
+@media(max-width:992px){
+   #tabMap{
+      padding: 0px;
+   }
+}
 
 .radio-inline{
    padding:1px;
